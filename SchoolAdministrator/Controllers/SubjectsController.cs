@@ -91,6 +91,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     _context.Update(subject);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -112,6 +113,56 @@ namespace SchoolAdministrator.Controllers
 
         }
 
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var subject = await _context.Subjects
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+
+            return View(subject);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var subject = await _context.Subjects
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+
+            return View(subject);
+        }
+
+        // POST: Institutions/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var subject = await _context.Subjects.FindAsync(id);
+            _context.Subjects.Remove(subject);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool SubjectExists(int id)
+        {
+            return _context.Subjects.Any(e => e.Id == id);
+        }
 
 
     }
