@@ -10,6 +10,7 @@ namespace SchoolAdministrator.Data
         }
 
         public DbSet<Institution> Institutions { get; set; }
+        public DbSet<Qualification> qualifications { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

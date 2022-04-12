@@ -111,6 +111,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     _context.Update(institution);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
