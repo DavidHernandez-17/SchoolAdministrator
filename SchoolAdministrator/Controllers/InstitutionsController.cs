@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
@@ -6,6 +7,7 @@ using SchoolAdministrator.Data.Entities;
 
 namespace SchoolAdministrator.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class InstitutionsController : Controller
     {
         private readonly DataContext _context;

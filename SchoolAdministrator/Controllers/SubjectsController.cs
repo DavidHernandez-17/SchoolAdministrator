@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
 
 namespace SchoolAdministrator.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SubjectsController : Controller
     {
         private readonly DataContext _context;

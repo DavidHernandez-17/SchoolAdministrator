@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
+using SchoolAdministrator.Data.Entities;
+using SchoolAdministrator.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +13,24 @@ builder.Services.AddDbContext<DataContext>(o =>
 });
 
 
+//TODO: Make strongest password
+builder.Services.AddIdentity<User, IdentityRole>(cfg =>
+{
+    cfg.User.RequireUniqueEmail = true;
+    cfg.Password.RequireDigit = false;
+    cfg.Password.RequiredUniqueChars = 0;
+    cfg.Password.RequireLowercase = false;
+    cfg.Password.RequireNonAlphanumeric = false;
+    cfg.Password.RequireUppercase = false;
+    cfg.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<DataContext>();
+
+
+
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddTransient<SeedDB>();
+builder.Services.AddScoped<IUserHelper, UserHelper>();
 
 var app = builder.Build();
 
@@ -39,10 +56,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
