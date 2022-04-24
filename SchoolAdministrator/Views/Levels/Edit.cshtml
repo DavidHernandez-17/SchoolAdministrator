@@ -1,12 +1,12 @@
-﻿@model SchoolAdministrator.Data.Entities.Institution
+﻿@model SchoolAdministrator.Data.Entities.Level
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Editar</h1>
-<h4>Institución</h4>
 
+<h4>Nivel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,18 +14,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="Levels" />
 
-            <partial name="_Institution"/>
-            
-            <div class="form-group mt-2">
+            <partial name="_Level"/>
+
+            <br/>
+            <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-outline-primary" />
                 <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
             </div>
         </form>
     </div>
 </div>
-
 
 
 @section Scripts {

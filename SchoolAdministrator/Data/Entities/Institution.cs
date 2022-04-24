@@ -16,6 +16,11 @@ namespace SchoolAdministrator.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string InstitutionType { get; set; }
 
+        public ICollection<Level> Levels { get; set; }
+
+        [Display(Name = "Niveles")]
+        public int LevelsNumber => Levels == null ? 0 : Levels.Count;
+
 
         //public ICollection<User> Users { get; set; }
 

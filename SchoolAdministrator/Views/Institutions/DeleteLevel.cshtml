@@ -1,0 +1,19 @@
+﻿@model SchoolAdministrator.Data.Entities.Level
+
+@{
+    ViewData["Title"] = "Delete Level";
+}
+
+<h1>Eliminar</h1>
+
+<h3>¿Estás seguro de eliminar?</h3>
+<div>
+    <h4>Nivel</h4>
+    <hr />
+    <partial name="_LevelDetails" />    
+    <form asp-action="DeleteLevel">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-outline-danger" />
+        <a asp-action="Details" asp-route-id="@Model?.Institution.Id" class="btn btn-outline-success">Regresar</a>
+    </form>
+</div>

@@ -98,5 +98,20 @@ namespace SchoolAdministrator.Helpers
             await AddUserToRoleAsync(newUser, user.UserType.ToString());
             return newUser;
         }
+
+        public Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetUserAsync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

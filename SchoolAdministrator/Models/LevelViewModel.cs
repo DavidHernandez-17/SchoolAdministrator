@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolAdministrator.Data.Entities
+namespace SchoolAdministrator.Models
 {
-    public class Level
+    public class LevelViewModel
     {
-
         public int Id { get; set; }
 
 
@@ -18,11 +17,7 @@ namespace SchoolAdministrator.Data.Entities
         [MaxLength(45, ErrorMessage = "El campo {0} debe tener maximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public String Type { get; set; }
-
-        public Institution Institution { get; set; }
-
-        //[Display(Name = "Niveles/Instituciones")]
-        //public int SubjectsNumber => Subjects == null ? 0 : Subjects.Count;
-
+        
+        public int InstitutionId { get; set; }
     }
 }
