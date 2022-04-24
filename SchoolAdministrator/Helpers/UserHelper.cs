@@ -84,7 +84,6 @@ namespace SchoolAdministrator.Helpers
                 Age = model.Age,
                 ImageId = imageId,
                 PhoneNumber = model.PhoneNumber,
-                Institution = await _context.Institutions.FindAsync(model.InstitutionId),
                 UserName = model.Username,
                 UserType = model.UserType
             };
