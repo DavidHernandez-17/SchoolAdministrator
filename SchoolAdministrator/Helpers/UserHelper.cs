@@ -67,10 +67,37 @@ namespace SchoolAdministrator.Helpers
             false);
         }
 
-
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId)
+        {
+            User user = new User
+            {
+                DocumentType = model.DocumentType,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Age = model.Age,
+                ImageId = imageId,
+                PhoneNumber = model.PhoneNumber,
+                Institution = await _context.Institutions.FindAsync(model.InstitutionId),
+                UserName = model.Username,
+                UserType = model.UserType
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
+
+            User newUser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
         }
     }
 }
