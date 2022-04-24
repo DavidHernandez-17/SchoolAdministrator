@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SchoolAdministrator.Data;
 using SchoolAdministrator.Helpers;
 using SchoolAdministrator.Models;
 
@@ -7,10 +8,12 @@ namespace SchoolAdministrator.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly DataContext _context;
 
-        public AccountController(IUserHelper userHelper)
+        public AccountController(IUserHelper userHelper, DataContext Context)
         {
             _userHelper = userHelper;
+            _context = Context;
         }
 
         public IActionResult Login()

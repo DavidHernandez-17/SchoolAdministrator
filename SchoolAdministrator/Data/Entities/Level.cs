@@ -4,6 +4,7 @@ namespace SchoolAdministrator.Data.Entities
 {
     public class Level
     {
+
         public int Id { get; set; }
 
 
@@ -20,6 +21,8 @@ namespace SchoolAdministrator.Data.Entities
 
         public Institution Institution { get; set; }
 
-        
+        //[Display(Name = "Niveles/Instituciones")]
+        //public int SubjectsNumber => Subjects == null ? 0 : Subjects.Count;
+
     }
 }

@@ -16,6 +16,8 @@ namespace SchoolAdministrator.Helpers
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId);
+
         Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();

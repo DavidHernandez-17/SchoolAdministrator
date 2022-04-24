@@ -10,6 +10,7 @@ namespace SchoolAdministrator.Data
         {
         }
 
+        public DbSet<Inscription> inscriptions { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<Qualification> qualifications { get; set; }
