@@ -345,7 +345,7 @@ namespace SchoolAdministrator.Controllers
             return View(level);
         }
 
-        // POST: Institutions/Delete/5
+        
         [HttpPost, ActionName("DeleteLevel")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteLevelConfirmed(int id)
