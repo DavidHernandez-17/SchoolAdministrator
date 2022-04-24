@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolAdministrator.Data;
 
@@ -11,9 +12,10 @@ using SchoolAdministrator.Data;
 namespace SchoolAdministrator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220418173703_AddIndexToLevelEntity")]
+    partial class AddIndexToLevelEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,7 @@ namespace SchoolAdministrator.Migrations
 
                     b.HasIndex("InstitutionId");
 
-                    b.HasIndex("Name", "InstitutionId")
+                    b.HasIndex("Name", "Type")
                         .IsUnique();
 
                     b.ToTable("Levels");
@@ -410,7 +412,7 @@ namespace SchoolAdministrator.Migrations
             modelBuilder.Entity("SchoolAdministrator.Data.Entities.Level", b =>
                 {
                     b.HasOne("SchoolAdministrator.Data.Entities.Institution", "Institution")
-                        .WithMany("Levels")
+                        .WithMany()
                         .HasForeignKey("InstitutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -427,11 +429,6 @@ namespace SchoolAdministrator.Migrations
                         .IsRequired();
 
                     b.Navigation("Institution");
-                });
-
-            modelBuilder.Entity("SchoolAdministrator.Data.Entities.Institution", b =>
-                {
-                    b.Navigation("Levels");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,26 +1,26 @@
-﻿@model SchoolAdministrator.Data.Entities.Institution
+﻿@model SchoolAdministrator.Models.LevelViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Editar</h1>
-<h4>Institución</h4>
+<h4>Nivel</h4>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="EditLevel">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="Levels" />
+            <input type="hidden" asp-for="InstitutionId" />
 
-            <partial name="_Institution"/>
+            <partial name="_Level"/>
             
             <div class="form-group mt-2">
                 <input type="submit" value="Guardar" class="btn btn-outline-primary" />
-                <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+                 <a asp-action="Details" asp-route-id="@Model.InstitutionId" class="btn btn-outline-success">Regresar</a>
             </div>
         </form>
     </div>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolAdministrator.Data;
 
@@ -11,9 +12,10 @@ using SchoolAdministrator.Data;
 namespace SchoolAdministrator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220414041748_CreateLevelEntity")]
+    partial class CreateLevelEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,9 +191,6 @@ namespace SchoolAdministrator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(45)
@@ -203,11 +202,6 @@ namespace SchoolAdministrator.Migrations
                         .HasColumnType("nvarchar(45)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InstitutionId");
-
-                    b.HasIndex("Name", "InstitutionId")
-                        .IsUnique();
 
                     b.ToTable("Levels");
                 });
@@ -407,17 +401,6 @@ namespace SchoolAdministrator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SchoolAdministrator.Data.Entities.Level", b =>
-                {
-                    b.HasOne("SchoolAdministrator.Data.Entities.Institution", "Institution")
-                        .WithMany("Levels")
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Institution");
-                });
-
             modelBuilder.Entity("SchoolAdministrator.Data.Entities.User", b =>
                 {
                     b.HasOne("SchoolAdministrator.Data.Entities.Institution", "Institution")
@@ -427,11 +410,6 @@ namespace SchoolAdministrator.Migrations
                         .IsRequired();
 
                     b.Navigation("Institution");
-                });
-
-            modelBuilder.Entity("SchoolAdministrator.Data.Entities.Institution", b =>
-                {
-                    b.Navigation("Levels");
                 });
 #pragma warning restore 612, 618
         }

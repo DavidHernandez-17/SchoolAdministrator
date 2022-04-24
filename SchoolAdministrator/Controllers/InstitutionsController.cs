@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
+using SchoolAdministrator.Models;
 
 namespace SchoolAdministrator.Controllers
 {
@@ -20,7 +21,9 @@ namespace SchoolAdministrator.Controllers
         // GET: Institutions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Institutions.ToListAsync());
+            return View(await _context.Institutions
+                .Include(i => i.Levels)
+                .ToListAsync());
         }
 
         // GET: Institutions/Details/5
@@ -32,6 +35,7 @@ namespace SchoolAdministrator.Controllers
             }
 
             var institution = await _context.Institutions
+                .Include(i => i.Levels)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (institution == null)
             {
@@ -41,10 +45,29 @@ namespace SchoolAdministrator.Controllers
             return View(institution);
         }
 
+        public async Task<IActionResult> DetailsLevel(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Level level = await _context.Levels
+                .Include(i => i.Institution)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            if (level == null)
+            {
+                return NotFound();
+            }
+
+            return View(level);
+        }
+
         // GET: Institutions/Create
         public IActionResult Create()
         {
-            return View();
+            Institution institution = new() { Levels = new List<Level>() };
+            return View(institution);
         }
 
         [HttpPost]
@@ -79,15 +102,76 @@ namespace SchoolAdministrator.Controllers
         
     }
 
-    // GET: Institutions/Edit/5
-    public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> AddLevel(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var institution = await _context.Institutions.FindAsync(id);
+            Institution institution = await _context.Institutions.FindAsync(id);
+            if (institution == null)
+            {
+                return NotFound();
+            }
+
+            LevelViewModel model = new()
+            {
+                InstitutionId = institution.Id,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddLevel(LevelViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Level level = new()
+                    {
+                        Institution = await _context.Institutions.FindAsync(model.InstitutionId),
+                        Name = model.Name,
+                        Type = model.Type,
+                    };
+                    _context.Add(level);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new {Id = model.Id });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre, en esta Institución.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(model);
+
+        }
+
+        // GET: Institutions/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var institution = await _context.Institutions
+                .Include(i => i.Levels)
+                .FirstOrDefaultAsync(i => i.Id == id);
             if (institution == null)
             {
                 return NotFound();
@@ -136,6 +220,78 @@ namespace SchoolAdministrator.Controllers
         
         }
 
+        public async Task<IActionResult> EditLevel(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Level level = await _context.Levels
+                .Include(l =>l.Institution)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            if (level == null)
+            {
+                return NotFound();
+            }
+
+            LevelViewModel model = new()
+            {
+                InstitutionId = level.Institution.Id,
+                Id = level.Id,
+                Name = level.Name,
+            };
+
+            return View(model);
+        }
+
+        // POST: Institutions/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLevel(int id, LevelViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Level level = new()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        Type = model.Type,
+                    };
+                    _context.Update(level);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new {Id = model.InstitutionId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre, en esta Institución.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(model);
+
+        }
+
         // GET: Institutions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -145,6 +301,7 @@ namespace SchoolAdministrator.Controllers
             }
 
             var institution = await _context.Institutions
+                .Include(m => m.Levels)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (institution == null)
             {
@@ -169,5 +326,41 @@ namespace SchoolAdministrator.Controllers
         {
             return _context.Institutions.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> DeleteLevel(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Level level = await _context.Levels
+                .Include(l => l.Institution)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            if (level == null)
+            {
+                return NotFound();
+            }
+
+            return View(level);
+        }
+
+        // POST: Institutions/Delete/5
+        [HttpPost, ActionName("DeleteLevel")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLevelConfirmed(int id)
+        {
+            Level level = await _context.Levels
+                .Include(l => l.Institution)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            _context.Levels.Remove(level);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new {Id = level.Institution.Id});
+        }
+
+
     }
+
+    
+        
 }
