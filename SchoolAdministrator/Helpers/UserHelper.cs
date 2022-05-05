@@ -84,6 +84,7 @@ namespace SchoolAdministrator.Helpers
                 Age = model.Age,
                 ImageId = imageId,
                 PhoneNumber = model.PhoneNumber,
+                Institution = await _context.Institutions.FindAsync(model.Institution),
                 UserName = model.Username,
                 UserType = model.UserType
             };
@@ -99,19 +100,24 @@ namespace SchoolAdministrator.Helpers
             return newUser;
         }
 
-        public Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
-        public Task<IdentityResult> UpdateUserAsync(User user)
+        public async Task<IdentityResult> UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _userManager.UpdateAsync(user);
         }
 
-        public Task<User> GetUserAsync(Guid userId)
+        public async Task<User> GetUserAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await _context.Users
+            .Include(u => u.Institution)
+            //.ThenInclude(c => c.Subjects)
+            //.ThenInclude(s => s.Country)
+            .FirstOrDefaultAsync(u => u.Id == userId.ToString());
+
         }
     }
 }

@@ -50,61 +50,40 @@
     </div>
 </div>
 
-@*@section Scripts {
+@section Scripts
+{
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+}
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#CountryId").change(function () {
+        $("#InstitutionId").change(function () {
             debugger;
-            $("#StateId").empty();
-            $("#StateId").append('<option value="0">[Selecciona un departamento/estado...]</option>');
-            $("#CityId").empty();
-            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+            $("#LevelId").empty();
+            $("#LevelId").append('<option value="0">[Selecciona un nivel...]</option>');
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetStates")',
+                url: '@Url.Action("GetLevels")',
                 dataType: 'json',
-                data: { countryId: $("#CountryId").val() },
-                success: function (states) {
-                    $.each(states, function (i, state) {
-                        $("#StateId").append('<option value="'
-                            + state.id + '">'
-                            + state.name + '</option>');
+                data: { InstitutionId: $("#InstitutionId").val() },
+                success: function (levels) {
+                    $.each(levels, function (i, level) {
+                        $("#LevelId").append('<option value="'
+                            + level.id + '">'
+                            + level.name + '</option>');
                     });
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
+                    alert('Failed to retrieve levels.' + ex);
                 }
             });
             return false;
         })
 
-        $("#StateId").change(function () {
-            $("#CityId").empty();
-            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetCities")',
-                dataType: 'json',
-                data: { stateId: $("#StateId").val() },
-                success: function (cities) {
-                    $.each(cities, function (i, city) {
-                        debugger;
-                        $("#CityId").append('<option value="'
-                            + city.id + '">'
-                            + city.name + '</option>');
-                    });
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve cities.' + ex);
-                }
-            });
-            return false;
         })
     });
-</script>*@
+</script>
 
 
 

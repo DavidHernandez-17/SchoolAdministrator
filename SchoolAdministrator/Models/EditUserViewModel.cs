@@ -53,28 +53,25 @@ namespace SchoolAdministrator.Models
 
 
         [Display(Name = "Institución")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una institución.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una institución.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Institution { get; set; }
-        //TODO: Combo institution
-        //public IEnumerable<SelectListItem> Institions { get; set; }
 
+        public IEnumerable<SelectListItem> Institions { get; set; }
 
+        
         [Display(Name = "Level")]
         //[Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Level")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Level { get; set; }
-        //TODO: Combo States
-        //public IEnumerable<SelectListItem> States { get; set; }
+
+        public IEnumerable<SelectListItem> levels { get; set; }
 
 
         [Display(Name = "Periodo Académico")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una ciudad.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Inscription { get; set; }
 
-        //TODO: Combo Cities
-        //public IEnumerable<SelectListItem> Cities { get; set; }
     }
 
 }

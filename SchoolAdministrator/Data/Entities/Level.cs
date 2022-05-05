@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace SchoolAdministrator.Data.Entities
 {
@@ -19,6 +20,7 @@ namespace SchoolAdministrator.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public String Type { get; set; }
 
+        [JsonIgnore]
         public Institution Institution { get; set; }
 
         //[Display(Name = "Niveles/Instituciones")]

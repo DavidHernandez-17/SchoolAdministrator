@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
 using SchoolAdministrator.Enums;
@@ -11,12 +12,14 @@ namespace SchoolAdministrator.Controllers
     {
         private readonly IUserHelper _userHelper;
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
 
-        public AccountController(IUserHelper userHelper, DataContext Context, IBlobHelper blobHelper)
+        public AccountController(IUserHelper userHelper, DataContext Context, ICombosHelper combosHelper, IBlobHelper blobHelper)
         {
             _userHelper = userHelper;
             _context = Context;
+            _combosHelper = combosHelper;
             _blobHelper = blobHelper;
         }
 
@@ -25,6 +28,8 @@ namespace SchoolAdministrator.Controllers
             AddUserViewModel model = new AddUserViewModel
             {
                 Id = Guid.Empty.ToString(),
+                Institions = await _combosHelper.GetComboInstitutionsAsync(),
+                levels = await _combosHelper.GetComboLevelsAsync(0),
                 UserType = UserType.User,
             };
 
@@ -69,32 +74,52 @@ namespace SchoolAdministrator.Controllers
             return View(model);
         }
 
+        public JsonResult GetLevels(int institutionId)
+        {
+            Institution institution = _context.Institutions
+                .Include(c => c.Levels)
+                .FirstOrDefault(c => c.Id == institutionId);
+            if (institution == null)
+            {
+                return null;
+            }
 
-        //public JsonResult GetStates(int countryId)
-        //{
-        //    Country country = _context.Countries
-        //        .Include(c => c.States)
-        //        .FirstOrDefault(c => c.Id == countryId);
-        //    if (country == null)
-        //    {
-        //        return null;
-        //    }
+            return Json(institution.Levels.OrderBy(d => d.Name));
+        }
 
-        //    return Json(country.States.OrderBy(d => d.Name));
-        //}
 
-        //public JsonResult GetCities(int stateId)
-        //{
-        //    State state = _context.States
-        //        .Include(s => s.Cities)
-        //        .FirstOrDefault(s => s.Id == stateId);
-        //    if (state == null)
-        //    {
-        //        return null;
-        //    }
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
-        //    return Json(state.Cities.OrderBy(c => c.Name));
-        //}
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User no found.");
+                }
+            }
+
+            return View(model);
+        }
+
 
         public IActionResult Login()
         {
