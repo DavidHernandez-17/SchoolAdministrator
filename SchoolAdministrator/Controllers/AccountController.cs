@@ -23,7 +23,31 @@ namespace SchoolAdministrator.Controllers
             _blobHelper = blobHelper;
         }
 
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            EditUserViewModel model = new()
+            {
+                DocumentType = user.DocumentType,
+                Document = user.Document,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                PhoneNumber = user.PhoneNumber,
+                ImageId = user.ImageId,
+                levels = await _combosHelper.GetComboLevelsAsync(user.Institution.Id),
+                Institions = await _combosHelper.GetComboInstitutionsAsync(),
+                Id = user.Id,
+            };
+            return View(model);
+        }
+
+            public async Task<IActionResult> Register()
         {
             AddUserViewModel model = new AddUserViewModel
             {

@@ -4,19 +4,18 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Registrar</h2>
+<h2>Crear</h2>
 
-<h4>Usuario</h4>
+<h4>Administrador</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Register" enctype="multipart/form-data">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="UserType" />
-            <input type="hidden" asp-for="Institution" />
-            <input type="hidden" asp-for="Level" />
-            <input type="hidden" asp-for="Inscription" />
+            <input type="hidden" asp-for="Institions" />
+            <input type="hidden" asp-for="levels" />
 
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
@@ -44,46 +43,49 @@
             <partial name="_User" />
 
             <div class="form-group mt-2">
-                <input type="submit" value="Registrar" class="btn btn-outline-primary" />
+                <input type="submit" value="Crear" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
 </div>
 
-@section Scripts
-{
+@section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#institutionId").change(function () {
+        $("#InstitutionId").change(function () {
             debugger;
+            $("#InstitutionId").empty();
+            $("#InstitutionId").append('<option value="0">[Selecciona un Institution...]</option>');
             $("#LevelId").empty();
             $("#LevelId").append('<option value="0">[Selecciona un nivel...]</option>');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetLevels")',
                 dataType: 'json',
-                data: { InstitutionId: $("#institutionId").val() },
+                data: { InstitutionId: $("#InstitutionId").val() },
                 success: function (levels) {
-                    $.each(levels, function (i, level) {
+                    $.each(states, function (i, level) {
                         $("#LevelId").append('<option value="'
                             + level.id + '">'
                             + level.name + '</option>');
                     });
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve levels.' + ex);
+                    alert('Failed to retrieve states.' + ex);
                 }
             });
             return false;
         })
 
+       error: function (ex) {
+                    alert('Failed to retrieve cities.' + ex);
+                }
+            });
+            return false;
         })
     });
 </script>
-
-
-
+}

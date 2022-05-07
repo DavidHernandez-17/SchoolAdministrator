@@ -114,7 +114,7 @@ namespace SchoolAdministrator.Helpers
         {
             return await _context.Users
             .Include(u => u.Institution)
-            //.ThenInclude(c => c.Subjects)
+            .ThenInclude(c => c.Levels)
             //.ThenInclude(s => s.Country)
             .FirstOrDefaultAsync(u => u.Id == userId.ToString());
 
