@@ -47,7 +47,7 @@ namespace SchoolAdministrator.Controllers
             return View(model);
         }
 
-            public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register()
         {
             AddUserViewModel model = new AddUserViewModel
             {

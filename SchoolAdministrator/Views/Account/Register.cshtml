@@ -14,8 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="UserType" />
-            <input type="hidden" asp-for="Institution" />
-            <input type="hidden" asp-for="Level" />
+            <input type="hidden" asp-for="Institions" />
+            <input type="hidden" asp-for="levels" />
             <input type="hidden" asp-for="Inscription" />
 
             <div class="form-group">
@@ -50,15 +50,14 @@
     </div>
 </div>
 
-@section Scripts
-{
+@section Scripts{
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#institutionId").change(function () {
+        $("#InstitutionId").change(function () {
             debugger;
             $("#LevelId").empty();
             $("#LevelId").append('<option value="0">[Selecciona un nivel...]</option>');
@@ -66,7 +65,7 @@
                 type: 'POST',
                 url: '@Url.Action("GetLevels")',
                 dataType: 'json',
-                data: { InstitutionId: $("#institutionId").val() },
+                data: { InstitutionId: $("#InstitutionId").val() },
                 success: function (levels) {
                     $.each(levels, function (i, level) {
                         $("#LevelId").append('<option value="'
@@ -81,9 +80,8 @@
             return false;
         })
 
-        })
     });
 </script>
 
-
+}
 

@@ -108,27 +108,117 @@ namespace SchoolAdministrator.Data
                 _context.Institutions.Add(new Institution
                 {
                     Name = "Salazar y herrera",
-                    InstitutionType = "Privada"
+                    InstitutionType = "Privada",
+                    Levels = new List<Level>()
+                    {
+                        new Level()
+                        {
+                            Name = "6",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "7",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "8",
+                            Type = "A"
+                        }
+                    }
                 });
                 _context.Institutions.Add(new Institution
                 {
                     Name = "Samuel Barrientos",
-                    InstitutionType = "Pública"
+                    InstitutionType = "Pública",
+                    Levels = new List<Level>()
+                    {
+                        new Level()
+                        {
+                            Name = "6",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "7",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "8",
+                            Type = "A"
+                        }
+                    }
                 });
                 _context.Institutions.Add(new Institution
                 {
                     Name = "La divisa",
-                    InstitutionType = "Pública"
+                    InstitutionType = "Pública",
+                    Levels = new List<Level>()
+                    {
+                        new Level()
+                        {
+                            Name = "6",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "7",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "8",
+                            Type = "A"
+                        }
+                    }
                 });
                 _context.Institutions.Add(new Institution
                 {
                     Name = "Lola Gonzales",
-                    InstitutionType = "Pública"
+                    InstitutionType = "Pública",
+                    Levels = new List<Level>()
+                    {
+                        new Level()
+                        {
+                            Name = "6",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "7",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "8",
+                            Type = "A"
+                        }
+                    }
                 });
                 _context.Institutions.Add(new Institution
                 {
                     Name = "Stela Vélez",
-                    InstitutionType = "Privada"
+                    InstitutionType = "Privada",
+                    Levels = new List<Level>()
+                    {
+                        new Level()
+                        {
+                            Name = "6",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "7",
+                            Type = "A"
+                        },
+                        new Level()
+                        {
+                            Name = "8",
+                            Type = "A"
+                        }
+                    }
                 });
 
                 await _context.SaveChangesAsync();
