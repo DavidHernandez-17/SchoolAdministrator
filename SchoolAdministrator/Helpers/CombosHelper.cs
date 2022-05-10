@@ -55,6 +55,23 @@ namespace SchoolAdministrator.Helpers
             return list;
         }
 
-        
+        public async Task<IEnumerable<SelectListItem>> GetComboSubjectsAsync()
+        {
+            List<SelectListItem> list = await _context.Subjects.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = $"{x.Id}"
+            })
+             .OrderBy(x => x.Text)
+             .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una materia...]",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }

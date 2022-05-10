@@ -43,29 +43,29 @@ namespace SchoolAdministrator.Models
         //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/noimage.png"
-            : $"https://shoppingprep.blob.core.windows.net/users/{ImageId}";
+            ? $"https://localhost:7213/images/noimage.png"
+            : $"https://shoppingzulu.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Image")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         //____________________________________________________________________________________________________________
 
 
         [Display(Name = "Institución")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una institución.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Institution { get; set; }
 
         public IEnumerable<SelectListItem> Institions { get; set; }
 
         
         [Display(Name = "Level")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Level")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Level")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Level { get; set; }
 
-        public IEnumerable<SelectListItem> levels { get; set; }
+        public IEnumerable<SelectListItem> Levels { get; set; }
 
 
         [Display(Name = "Periodo Académico")]

@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="UserType" />
             <input type="hidden" asp-for="Institions" />
-            <input type="hidden" asp-for="levels" />
+            <input type="hidden" asp-for="Levels" />
 
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
@@ -57,8 +57,6 @@
     $(document).ready(function () {
         $("#InstitutionId").change(function () {
             debugger;
-            $("#InstitutionId").empty();
-            $("#InstitutionId").append('<option value="0">[Selecciona un Institution...]</option>');
             $("#LevelId").empty();
             $("#LevelId").append('<option value="0">[Selecciona un nivel...]</option>');
             $.ajax({
@@ -67,25 +65,19 @@
                 dataType: 'json',
                 data: { InstitutionId: $("#InstitutionId").val() },
                 success: function (levels) {
-                    $.each(states, function (i, level) {
+                    $.each(levels, function (i, level) {
                         $("#LevelId").append('<option value="'
                             + level.id + '">'
                             + level.name + '</option>');
                     });
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
+                    alert('Failed to retrieve levels.' + ex);
                 }
             });
             return false;
         })
 
-       error: function (ex) {
-                    alert('Failed to retrieve cities.' + ex);
-                }
-            });
-            return false;
-        })
     });
 </script>
-}
+}   

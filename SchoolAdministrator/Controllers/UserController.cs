@@ -40,7 +40,7 @@ namespace SchoolAdministrator.Controllers
             {
                 Id = Guid.Empty.ToString(),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
-                levels = await _combosHelper.GetComboLevelsAsync(0),
+                Levels = await _combosHelper.GetComboLevelsAsync(0),
                 UserType = UserType.Admin,
             };
 

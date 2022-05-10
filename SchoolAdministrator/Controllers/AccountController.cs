@@ -40,7 +40,7 @@ namespace SchoolAdministrator.Controllers
                 Age = user.Age,
                 PhoneNumber = user.PhoneNumber,
                 ImageId = user.ImageId,
-                levels = await _combosHelper.GetComboLevelsAsync(user.Institution.Id),
+                Levels = await _combosHelper.GetComboLevelsAsync(user.Institution.Id),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
                 Id = user.Id,
             };
@@ -53,7 +53,7 @@ namespace SchoolAdministrator.Controllers
             {
                 Id = Guid.Empty.ToString(),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
-                levels = await _combosHelper.GetComboLevelsAsync(0),
+                Levels = await _combosHelper.GetComboLevelsAsync(0),
                 UserType = UserType.User,
             };
 
@@ -122,7 +122,13 @@ namespace SchoolAdministrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if(model.OldPassword == model.NewPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Debes ingresar una contraseña diferente.");
+                    return View(model);
+                }
+
+                User? user = await _userHelper.GetUserAsync(User.Identity.Name);
                 if (user != null)
                 {
                     var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
