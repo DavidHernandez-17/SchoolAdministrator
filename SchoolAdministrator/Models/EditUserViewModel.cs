@@ -46,7 +46,7 @@ namespace SchoolAdministrator.Models
             ? $"https://localhost:7213/images/noimage.png"
             : $"https://schooladministrator.blob.core.windows.net/users/{ImageId}";
 
-        [Display(Name = "Image")]
+        [Display(Name = "Foto")]
         public IFormFile? ImageFile { get; set; }
 
         //____________________________________________________________________________________________________________
@@ -60,7 +60,7 @@ namespace SchoolAdministrator.Models
         public IEnumerable<SelectListItem> Institions { get; set; }
 
         
-        [Display(Name = "Level")]
+        [Display(Name = "Nivel")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Level")]
         //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Level { get; set; }
