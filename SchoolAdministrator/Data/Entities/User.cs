@@ -40,8 +40,8 @@ namespace SchoolAdministrator.Data.Entities
         //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/noimage.png"
-            : $"https://shoppingprep.blob.core.windows.net/users/{ImageId}";
+            ? $"https://localhost:7213/images/noimage.png"
+            : $"https://schooladministrator.blob.core.windows.net/users/{ImageId}";
 
 
         [Display(Name = "Tipo de usuario")]

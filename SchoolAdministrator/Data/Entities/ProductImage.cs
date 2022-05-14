@@ -15,7 +15,7 @@ namespace SchoolAdministrator.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7213/images/noimage.png"
-            : $"https://shopping4.blob.core.windows.net/products/{ImageId}";
+            : $"https://schooladministrator.blob.core.windows.net/products/{ImageId}";
 
     }
 }
