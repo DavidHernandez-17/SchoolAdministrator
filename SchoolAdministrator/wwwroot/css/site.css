@@ -19,18 +19,6 @@ body {
 
 @charset "utf-8";
 
-.card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 300px;
-    height: 370px;
-    border: 1px solid lightgray;
-    box-shadow: 2px 2px 8px 4px #d3d3d3d1;
-    border-radius: 15px;
-    font-family: sans-serif;
-    margin: 5px;
-}
 
 .card_title {
     font-size: 24px;
@@ -42,7 +30,7 @@ body {
 }
 
 .card_foot {
-    background: #6699ff;
+    background: #2C3E50;
     border-radius: 0 0 15px 15px;
     padding: 10px;
     text-align: center;
@@ -53,12 +41,41 @@ body {
     color: white;
 }
 
-.foot a:after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    content: ""
+    .foot a:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: ""
+    }
+
+/*Zoom images*/
+.zoom {
+    padding: 5px;
+    background-color: transparent;
+    transition: transform .2s;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
 }
+
+.zoom:hover {
+    -ms-transform: scale(2); /* IE 9 */
+    -webkit-transform: scale(2); /* Safari 3-8 */
+    transform: scale(2);
+}
+
+.carousel-inner {
+    width: auto;
+    height: 500px;
+    max-height: 500px !important;
+}
+
+.carousel-content {
+    color: black;
+    display: flex;
+    text-align: center;
+}
+
