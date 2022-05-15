@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
 using SchoolAdministrator.Helpers;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddScoped<IOrdersHelper, OrdersHelper>();
+builder.Services.AddFlashMessage();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 

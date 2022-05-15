@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
 using SchoolAdministrator.Models;
+using Vereyon.Web;
 
 namespace SchoolAdministrator.Controllers
 {
@@ -12,10 +13,12 @@ namespace SchoolAdministrator.Controllers
     public class InstitutionsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public InstitutionsController(DataContext context)
+        public InstitutionsController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
 
         // GET: Institutions
@@ -86,7 +89,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una Institución con el mismo nombre.");
+                        _flashMessage.Info("Ya existe una Institución con el mismo nombre.");
                     }
                     else
                     {
@@ -145,7 +148,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre, en esta Institución.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre, en esta Institución.");
                     }
                     else
                     {
@@ -203,7 +206,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una institución con el mismo nombre.");
+                        _flashMessage.Info("Ya existe una institución con el mismo nombre.");
                     }
                     else
                     {
@@ -275,7 +278,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre, en esta Institución.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre, en esta Institución.");
                     }
                     else
                     {

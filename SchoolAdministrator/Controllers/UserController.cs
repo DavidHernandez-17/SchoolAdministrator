@@ -7,6 +7,7 @@ using SchoolAdministrator.Data.Entities;
 using SchoolAdministrator.Enums;
 using SchoolAdministrator.Helpers;
 using SchoolAdministrator.Models;
+using Vereyon.Web;
 
 namespace SchoolAdministrator.Controllers
 {
@@ -19,14 +20,16 @@ namespace SchoolAdministrator.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper)
+        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper, IFlashMessage flashMessage)
         {
             _userHelper = userHelper;
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -66,7 +69,7 @@ namespace SchoolAdministrator.Controllers
                 User user = await _userHelper.AddUserAsync(model, imageId);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _flashMessage.Danger("Este correo ya está siendo usado.");
                     return View(model);
                 }
 
@@ -86,7 +89,7 @@ namespace SchoolAdministrator.Controllers
                         $"<p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "Las instrucciones para habilitar el administrador han sido enviadas al correo.";
+                    _flashMessage.Confirmation("Las instrucciones para habilitar el administrador han sido enviadas al correo.");
                     return View(model);
                 }
 

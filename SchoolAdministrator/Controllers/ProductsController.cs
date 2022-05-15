@@ -5,6 +5,7 @@ using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
 using SchoolAdministrator.Helpers;
 using SchoolAdministrator.Models;
+using Vereyon.Web;
 
 namespace SchoolAdministrator.Controllers
 {
@@ -14,12 +15,14 @@ namespace SchoolAdministrator.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IFlashMessage flashMessage)
         {
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -87,7 +90,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                        _flashMessage.Info("Ya existe un producto con el mismo nombre.");
                     }
                     else
                     {
@@ -154,7 +157,7 @@ namespace SchoolAdministrator.Controllers
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                    _flashMessage.Info("Ya existe un producto con el mismo nombre.");
                 }
                 else
                 {

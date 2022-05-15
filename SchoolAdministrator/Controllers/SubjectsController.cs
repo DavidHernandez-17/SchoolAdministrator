@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
+using Vereyon.Web;
 
 namespace SchoolAdministrator.Controllers
 {
@@ -10,10 +11,12 @@ namespace SchoolAdministrator.Controllers
     public class SubjectsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public SubjectsController(DataContext _context)
+        public SubjectsController(DataContext _context, IFlashMessage flashMessage)
         {
             this._context = _context;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -42,7 +45,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una materia con el mismo nombre.");
+                        _flashMessage.Info("Ya existe una materia con el mismo nombre.");
                     }
                     else
                     {
@@ -99,7 +102,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una materia con el mismo nombre.");
+                        _flashMessage.Info("Ya existe una materia con el mismo nombre.");
                     }
                     else
                     {

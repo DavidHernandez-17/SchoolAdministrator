@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SchoolAdministrator.Data;
 using SchoolAdministrator.Data.Entities;
+using Vereyon.Web;
 
 namespace SchoolAdministrator.Controllers
 {
     public class LevelsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IFlashMessage _flashMessage;
 
-        public LevelsController(DataContext context)
+        public LevelsController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
 
         [HttpGet]
@@ -69,7 +72,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre.");
                     }
                     else
                     {
@@ -125,7 +128,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Nivel con el mismo nombre.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre.");
                     }
                     else
                     {
