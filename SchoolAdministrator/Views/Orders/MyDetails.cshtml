@@ -1,75 +1,77 @@
-﻿@model IEnumerable<SchoolAdministrator.Data.Entities.Product>
+﻿@model SchoolAdministrator.Data.Entities.Sale
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Details";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<flash dismissable="true" />
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Crear Nuevo</a>
-</p>
-<h3 class="panel-title">Productos</h3>
-<div class="row text-center">
+<h1>Detalles</h1>
+
+<div>
+    <partial name="_OrderDetails" />    
+</div>
+
+<div>
+    <a asp-action="MyOrders" class="btn btn-outline-success">Regresar</a>
+</div>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<hr />
+
+<div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Productos</h3>
+            </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Name)
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Product.Name)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Description)
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Remarks)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Price)
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Product.Price)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Stock)
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Quantity)
                             </th>
                             <th>
-                                Materias
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Value)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ImagesNumber)
+                                @Html.DisplayNameFor(model => model.SaleDetails.FirstOrDefault().Product.ImageFullPath)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ImageFullPath)
-                            </th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.SaleDetails)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.Product.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @Html.DisplayFor(modelItem => item.Remarks)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
+                                    @Html.DisplayFor(modelItem => item.Product.Price)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Stock)
+                                    @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.CategoriesNumber)
+                                    @Html.DisplayFor(modelItem => item.Value)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ImagesNumber)
-                                </td>
-                                <td>
-                                    <img src="@item.ImageFullPath" style="width:100px;" />
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa-solid fa-circle-info"></i></a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-circle-minus"></i></a>
+                                    <div class="zoom">
+                                        <img src="@item.Product.ImageFullPath" style="width:100px;" />
+                                    </div>
                                 </td>
                             </tr>
                         }

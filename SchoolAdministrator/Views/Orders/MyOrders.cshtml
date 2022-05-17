@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SchoolAdministrator.Data.Entities.Product>
+﻿@model IEnumerable<SchoolAdministrator.Data.Entities.Sale>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,10 +6,7 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Crear Nuevo</a>
-</p>
-<h3 class="panel-title">Productos</h3>
+<h3 class="panel-title mb-3">Mis Pedidos</h3>
 <div class="row text-center">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -18,25 +15,22 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Name)
+                                @Html.DisplayNameFor(model => model.Date)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Description)
+                                @Html.DisplayNameFor(model => model.Remarks)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Price)
+                                @Html.DisplayNameFor(model => model.OrderStatus)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Stock)
+                                @Html.DisplayNameFor(model => model.Lines)
                             </th>
                             <th>
-                                Materias
+                                @Html.DisplayNameFor(model => model.Quantity)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ImagesNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ImageFullPath)
+                                @Html.DisplayNameFor(model => model.Value)
                             </th>
                             <th></th>
                         </tr>
@@ -46,30 +40,25 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.Date)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @Html.DisplayFor(modelItem => item.Remarks)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Stock)
+                                    @Html.DisplayFor(modelItem => item.Lines)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.CategoriesNumber)
+                                    @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ImagesNumber)
+                                    @Html.DisplayFor(modelItem => item.Value)
                                 </td>
                                 <td>
-                                    <img src="@item.ImageFullPath" style="width:100px;" />
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa-solid fa-circle-info"></i></a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-circle-minus"></i></a>
+                                    <a asp-action="MyDetails" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa-solid fa-circle-info"></i></a>
                                 </td>
                             </tr>
                         }
