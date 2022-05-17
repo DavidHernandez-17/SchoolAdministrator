@@ -4,9 +4,8 @@ namespace SchoolAdministrator.Models
 {
     public class HomeViewModel
     {
-        public ICollection<Product> Products { get; set; }
-
+        public PaginatedList<Product> Products { get; set; }
         public float Quantity { get; set; }
-
+        public ICollection<Subject> Subjects { get; set; }
     }
 }
