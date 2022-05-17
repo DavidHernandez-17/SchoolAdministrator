@@ -20,7 +20,7 @@
 
 
     <flash dismissable="true" />
-    <h1>Administrador Escolar</h1>
+    <h1><i class="fa-solid fa-book-bookmark"></i> Administrador Escolar</h1>
     <h3>Materias</h3>
 
     <div class="mb-2">
@@ -35,20 +35,20 @@
         <a asp-action="ShowCart" class="btn btn-outline-primary"><i class="fa-solid fa-cart-shopping"></i> (@Model.Quantity)</a>
     }
 
-    <div class="mb-2">
-        <a asp-action="Shop" asp-route-sortOrder="@ViewData["NameSortParm"]">Ordenar por Nombre</a>&nbsp;&nbsp;
-        <a asp-action="Shop" asp-route-sortOrder="@ViewData["PriceSortParm"]">Ordenar por Precio</a>
-    </div>
-
-    <form asp-action="Shop" method="get">
+    <form asp-action="Shop" method="get" class="mt-2">
         <div class="form-actions no-color">
             <p>
-                Buscar por nombre o categoría: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                <input type="submit" value="Buscar" class="btn btn-outline-dark" />
-                <a asp-action="Shop" class="btn btn-outline-dark">Ver Todos los Productos</a>
+                Buscar por nombre o materia: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="Buscar" class="btn btn-outline-dark" /> 
+                <a asp-action="Shop" class="btn btn-outline-dark"><i class="fa-solid fa-eye"></i> Todos los Productos</a>
             </p>
         </div>
     </form>
+
+     <div class="mb-2 mt-2">
+        <a asp-action="Shop" class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["NameSortParm"]"><i class="fa-solid fa-sort"></i> Ordenar por Nombre</a>&nbsp;&nbsp;
+        <a asp-action="Shop" class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["PriceSortParm"]"><i class="fa-solid fa-sort"></i> Ordenar por Precio</a>
+    </div>
 
 
     <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
@@ -76,7 +76,7 @@
         }
         else
         {
-            <h3>No hay productos con su criterio de búsqueda</h3>
+            <h3><i class="fa-solid fa-circle-info"></i> No hay productos con su criterio de búsqueda</h3>
         }
     </div>
 
@@ -91,14 +91,14 @@
            asp-route-pageNumber="@(Model.Products.PageIndex - 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-outline-dark @prevDisabled">
-           <i class="fa-solid fa-circle-chevron-left"></i>
+            <i class="fa-solid fa-circle-chevron-left"></i>
         </a>
         <a asp-action="Shop"
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.Products.PageIndex + 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-outline-dark @nextDisabled">
-           <i class="fa-solid fa-circle-chevron-right"></i>
+            <i class="fa-solid fa-circle-chevron-right"></i>
         </a>
     </div>
 
