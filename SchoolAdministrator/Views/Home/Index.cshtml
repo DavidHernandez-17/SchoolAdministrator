@@ -10,13 +10,13 @@
 <div class="text-center">
     @if (User.Identity.IsAuthenticated != true || User.IsInRole("User"))
     {
-        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Shop"><i class="fa-solid fa-store"></i> Productos</a>
+        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Shop"><i class="fa-solid fa-store"></i> Tienda</a>
     }
     
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
         <a class="btn btn-outline-primary" asp-controller="Products" asp-action="Index"><i class="fa-solid fa-store"></i> Productos</a>
-        <a class="btn btn-outline-dark" asp-controller="Dashboard" asp-action="Index"><i class="fa-brands fa-slack"></i> Dashboard</a>
+        <a class="btn btn-outline-dark" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-tachometer-alt text-danger"></i> Dashboard</a>
     }
 
 </div>

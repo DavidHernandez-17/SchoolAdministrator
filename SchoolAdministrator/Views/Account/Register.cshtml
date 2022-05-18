@@ -73,11 +73,11 @@
                 url: '@Url.Action("GetLevels")',
                 dataType: 'json',
                 data: { InstitutionId: $("#InstitutionId").val() },
-                success: function (levels) {
-                    $.each(levels, function (i, level) {
+                success: function (Levels) {
+                    $.each(Levels, function (i, Level) {
                         $("#LevelId").append('<option value="'
-                            + level.id + '">'
-                            + level.name + '</option>');
+                            + Level.id + '">'
+                            + Level.name + '</option>');
                     });
                 },
                 error: function (ex) {
