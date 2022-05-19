@@ -8,6 +8,10 @@ html {
     }
 }
 
+.cardBox {
+    box-shadow: 4px 5px 9px 0px #303030;
+}
+
 html {
     position: relative;
     min-height: 100%;

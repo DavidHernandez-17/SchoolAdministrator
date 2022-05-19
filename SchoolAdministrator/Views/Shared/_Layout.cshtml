@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-secondary border-bottom box-shadow mb-5 ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-5 ">
             <div class="container-fluid">
                 <a class="navbar-brand " text-dark asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-book-bookmark"></i> AE </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,22 +24,22 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i> Inicio</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i><strong> Inicio</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-bullhorn"></i> Políticas</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-bullhorn"></i><strong> Políticas</strong></a>
                         </li>
                         @if (User.Identity.IsAuthenticated != true || User.IsInRole("User"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Shop"><i class="fa-solid fa-store"></i> Tienda</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Shop"><i class="fa-solid fa-store"></i><strong> Tienda</strong></a>
                             </li>
                         }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Orders" asp-action="MyOrders"><i class="fa-solid fa-check-to-slot"></i> Mis Pedidos</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Orders" asp-action="MyOrders"><i class="fa-solid fa-check-to-slot"></i><strong>Mis Pedidos</strong></a>
                             </li>
                         }
 
@@ -47,7 +47,7 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-screwdriver-wrench"></i> Administración</a>
+                                <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-screwdriver-wrench"></i><strong> Administración</strong></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-tachometer-alt text-danger"></i> Dashboard</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Institutions" asp-action="Index"><i class="fa-solid fa-graduation-cap text-warning"></i> Instituciones</a></li>

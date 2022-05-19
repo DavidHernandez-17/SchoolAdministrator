@@ -23,9 +23,12 @@ namespace SchoolAdministrator.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.UsersCount = _context.Users.Count();
+            //ViewBag.UsersCount = _context.Users.Where(t => t.EmailConfirmed == false).Count();
             ViewBag.ProductsCount = _context.Products.Count();
             ViewBag.NewOrdersCount = _context.Sales.Where(o => o.OrderStatus == OrderStatus.Nuevo).Count();
             ViewBag.ConfirmedOrdersCount = _context.Sales.Where(o => o.OrderStatus == OrderStatus.Confirmado).Count();
+            ViewBag.InstitutionsCount = _context.Institutions.Count();
+            ViewBag.SubjectsCount = _context.Subjects.Count();
 
             return View(await _context.TemporalSales
                     .Include(u => u.User)
