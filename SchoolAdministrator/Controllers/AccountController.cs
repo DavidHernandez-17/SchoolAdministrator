@@ -85,7 +85,7 @@ namespace SchoolAdministrator.Controllers
                 {
                     _flashMessage.Danger("Este correo ya está siendo usado.");
                     model.Institions = await _combosHelper.GetComboInstitutionsAsync();
-                    //model.Levels = await _combosHelper.GetComboLevelsAsync(model.Institution);
+    
                     return View(model);
                 }
 
@@ -238,7 +238,7 @@ namespace SchoolAdministrator.Controllers
                     "ResetPassword",
                     "Account",
                     new { token = myToken }, protocol: HttpContext.Request.Scheme);
-                _mailHelper.SendMail(
+                Response respose = _mailHelper.SendMail(
                     $"{user.FullName}",
                     model.Email,
                     "School Administrator - Recuperación de Contraseña",
@@ -246,9 +246,16 @@ namespace SchoolAdministrator.Controllers
                     $"Para recuperar la contraseña haga click en el siguiente enlace:" +
                     $"<p><a href = \"{link}\">Reset Password</a></p>");
 
-                _flashMessage.Confirmation("Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
-                return View(model);
+                if (respose.IsSuccess)
+                {
+                    _flashMessage.Confirmation("Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
+                }
+                else
+                {
+                    _flashMessage.Danger(respose.Message);
+                }
 
+                return View(model);
             }
 
             return RedirectToAction(nameof(Login));

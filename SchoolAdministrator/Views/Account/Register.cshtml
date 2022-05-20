@@ -64,18 +64,18 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#InstitutionId").change(function () {
+        $("#Institution").change(function () {
             debugger;
-            $("#LevelId").empty();
-            $("#LevelId").append('<option value="0">[Selecciona un nivel...]</option>');
+            $("#Level").empty();
+            $("#Level").append('<option value="0">[Selecciona un nivel...]</option>');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetLevels")',
                 dataType: 'json',
-                data: { InstitutionId: $("#InstitutionId").val() },
+                data: { InstitutionId: $("#Institution").val() },
                 success: function (Levels) {
                     $.each(Levels, function (i, Level) {
-                        $("#LevelId").append('<option value="'
+                        $("#Level").append('<option value="'
                             + Level.id + '">'
                             + Level.name + '</option>');
                     });
@@ -86,7 +86,6 @@
             });
             return false;
         })
-
     });
 </script>
 }

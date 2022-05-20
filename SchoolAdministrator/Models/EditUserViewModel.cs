@@ -54,15 +54,15 @@ namespace SchoolAdministrator.Models
 
         [Display(Name = "Institución")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una institución.")]
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Institution { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int Institution { get; set; }
 
         public IEnumerable<SelectListItem> Institions { get; set; }
 
         
         [Display(Name = "Nivel")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Level")]
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Level { get; set; }
 
         public IEnumerable<SelectListItem> Levels { get; set; }

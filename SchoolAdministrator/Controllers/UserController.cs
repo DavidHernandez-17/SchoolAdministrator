@@ -101,10 +101,10 @@ namespace SchoolAdministrator.Controllers
         }
 
 
-        public JsonResult? GetLevels(int institutionId)
+        public JsonResult GetLevels(int institutionId)
         {
-            Institution? institution = _context.Institutions
-                .Include(c => c.Levels)
+            Institution institution = _context.Institutions
+                .Include(c => c.Levels) 
                 .FirstOrDefault(c => c.Id == institutionId);
             if (institution == null)
             {
