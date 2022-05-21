@@ -2,9 +2,12 @@
     ViewData["Title"] = "Confirmación de Email";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div>
-    <p>
-        Gracias por confirmar el email, ahora puder iniciar sesión en el sistema.
-    </p>
+<div text-align: center>
+    <h2><i class="fa-solid fa-circle-check btn-outline-success"></i> @ViewData["Title"]</h2>
+    <div>
+        <p>
+            Gracias por confirmar el email, ahora puder iniciar sesión en el sistema.
+        </p>
+        <a asp-controller="Account" asp-action="Login" class="text-center btn btn-outline-success">Aceptar</a>
+    </div>
 </div>
