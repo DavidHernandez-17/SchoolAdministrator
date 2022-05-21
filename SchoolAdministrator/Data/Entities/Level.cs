@@ -23,6 +23,7 @@ namespace SchoolAdministrator.Data.Entities
         [JsonIgnore]
         public Institution Institution { get; set; }
 
+     
         //[Display(Name = "Niveles/Instituciones")]
         //public int SubjectsNumber => Subjects == null ? 0 : Subjects.Count;
 
