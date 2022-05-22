@@ -26,7 +26,7 @@
     <div class="mb-2">
         @foreach (var item in Model.Subjects)
         {
-            <span>@item.Name&nbsp;&nbsp;</span>
+            <span> <a class="btn btn-outline-primary" href="@Url.Action("Shop", "Home", new { searchString = item.Name})" ><strong> @item.Name&nbsp;</strong></a></span>
         }
     </div>
 
