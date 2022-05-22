@@ -61,6 +61,7 @@ namespace SchoolAdministrator.Controllers
                 Id = Guid.Empty.ToString(),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
                 Levels = await _combosHelper.GetComboLevelsAsync(0),
+                Inscriptions = await _combosHelper.GetComboInscriptionsAsync(),
                 UserType = UserType.User,
             };
 
@@ -113,7 +114,8 @@ namespace SchoolAdministrator.Controllers
             }
 
             model.Institions = await _combosHelper.GetComboInstitutionsAsync();
-            //model.Levels = await _combosHelper.GetComboLevelsAsync(model.Institution);
+            model.Levels = await _combosHelper.GetComboLevelsAsync(model.Institution);
+            model.Inscriptions = await _combosHelper.GetComboInscriptionsAsync();
 
             return View(model);
         }

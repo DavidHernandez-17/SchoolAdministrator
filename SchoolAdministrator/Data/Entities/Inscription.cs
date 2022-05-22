@@ -4,7 +4,7 @@ namespace SchoolAdministrator.Data.Entities
 {
     public class Inscription
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Perido académico")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]

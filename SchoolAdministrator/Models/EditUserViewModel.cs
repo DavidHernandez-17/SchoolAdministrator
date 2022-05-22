@@ -70,7 +70,9 @@ namespace SchoolAdministrator.Models
 
         [Display(Name = "Periodo Académico")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Inscription { get; set; }
+        public int Inscription { get; set; }
+
+        public IEnumerable<SelectListItem> Inscriptions { get; set; }
 
     }
 

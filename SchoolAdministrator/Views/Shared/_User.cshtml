@@ -59,7 +59,7 @@
 
         <div class="form-group">
             <label asp-for="Inscription" class="control-label"></label>
-            <input asp-for="Inscription" class="form-control" />
+            <select asp-for="Inscription" asp-items="Model.Inscriptions" class="form-control"></select>
             <span asp-validation-for="Inscription" class="text-danger"></span>
         </div>
     </div>    

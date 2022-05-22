@@ -23,12 +23,24 @@ namespace SchoolAdministrator.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckInstitutionsAsync();
             await CheckSubjectsAsync();
+            await CheckInscriptionsAsync();
             await CheckRolesAsync();
             await CheckProductsAsync();
             await CheckUserAsync("CC", "2020", "David", "Hernandez", "21", "davidh@yopmail.com", "301 796 6824", "DavidHernandez.jpg", UserType.Admin);
             await CheckUserAsync("CC", "1231", "Daye", "Ruiz", "22", "daye22@yopmail.com", "301 796 3421", "Daye.jpg", UserType.User);
             await CheckUserAsync("CC", "1231", "Ana", "Perez", "20", "anaperez20@yopmail.com", "320 435 3904", "Ana.jpg", UserType.User);
 
+        }
+
+        private async Task CheckInscriptionsAsync()
+        {
+            if(!_context.Inscriptions.Any())
+            {
+                _context.Inscriptions.Add(new Inscription { PeriodAcedemic = "2022" });
+                _context.Inscriptions.Add(new Inscription { PeriodAcedemic = "2023" });
+                _context.Inscriptions.Add(new Inscription { PeriodAcedemic = "2024" });
+                _context.Inscriptions.Add(new Inscription { PeriodAcedemic = "2025" });
+            }
         }
 
         private async Task CheckProductsAsync()

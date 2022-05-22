@@ -73,5 +73,24 @@ namespace SchoolAdministrator.Helpers
 
             return list;
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboInscriptionsAsync()
+        {
+            List<SelectListItem> list = await _context.Inscriptions.Select(x => new SelectListItem
+            {
+                Text = x.PeriodAcedemic,
+                Value = $"{x.Id}"
+            })
+             .OrderBy(x => x.Text)
+             .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un periodo académico...]",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }

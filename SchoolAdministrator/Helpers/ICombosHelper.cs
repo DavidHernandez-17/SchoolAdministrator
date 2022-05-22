@@ -9,6 +9,9 @@ namespace SchoolAdministrator.Helpers
         Task<IEnumerable<SelectListItem>> GetComboLevelsAsync(int institutionId);
 
         Task<IEnumerable<SelectListItem>> GetComboSubjectsAsync();
+        Task<IEnumerable<SelectListItem>> GetComboInscriptionsAsync();
+
+        
 
     }
 }
