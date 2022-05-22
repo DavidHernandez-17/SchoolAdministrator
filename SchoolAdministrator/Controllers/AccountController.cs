@@ -49,10 +49,46 @@ namespace SchoolAdministrator.Controllers
                 ImageId = user.ImageId,
                 Levels = await _combosHelper.GetComboLevelsAsync(user.Institution.Id),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
+                Institution = user.Institution.Id,
+                Inscriptions = await _combosHelper.GetComboInscriptionsAsync(),
                 Id = user.Id,
             };
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.DocumentType = model.DocumentType;
+                user.Document = model.Document;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Age = model.Age;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageId = imageId;
+                user.Institution = await _context.Institutions.FindAsync(model.Institution);
+                
+
+                await _userHelper.UpdateUserAsync(user);
+                _flashMessage.Info("Información de usuario actualizada.");
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);  
+        }
+
 
         public async Task<IActionResult> Register()
         {

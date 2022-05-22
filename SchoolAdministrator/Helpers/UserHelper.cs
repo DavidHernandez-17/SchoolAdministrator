@@ -115,7 +115,7 @@ namespace SchoolAdministrator.Helpers
             return await _context.Users
             .Include(u => u.Institution)
             .ThenInclude(c => c.Levels)
-            //.ThenInclude(s => s.Country)
+            .Include(i => i.Institution)
             .FirstOrDefaultAsync(u => u.Id == userId.ToString());
 
         }
