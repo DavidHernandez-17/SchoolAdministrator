@@ -58,7 +58,7 @@ namespace SchoolAdministrator.Controllers
             }
             catch
             {
-                _flashMessage.Danger("No se puede borrar la materia porque tiene propductos relacionados.");
+                _flashMessage.Danger("No se puede borrar la materia porque tiene productos relacionados.");
             }
 
             return RedirectToAction(nameof(Index));
