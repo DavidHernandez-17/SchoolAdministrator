@@ -1,0 +1,40 @@
+﻿@model SchoolAdministrator.Data.Entities.Institution
+
+<flash dismissable="true" />
+
+<table class="table table-striped table-responsive-md table-bordered smfont text-center"  id="LevelsTable">
+    <colgroup>
+        <col span="1" />
+        <col span="1" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Levels.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Levels.FirstOrDefault().Type)
+            </th>
+            <th>
+                <a onclick="showInPopup('@Url.Action("AddLevel", "Institutions", new { id = Model?.Id }, Context.Request.Scheme)' , 'Nuevo Nivel')" class="btn btn-sm btn-primary text-white"><i class="fa fa-plus-circle"></i> Nivel</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model?.Levels)
+        {
+        <tr>
+            <td>
+                <a asp-action="DetailsLevel" asp-controller="Institutions" asp-route-Id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                <a onclick="showInPopup('@Url.Action("EditLevel", "Institutions", new { id = item.Id }, Context.Request.Scheme)' , 'Actualizar Nivel')" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
+                <button data-id="@item.Id" class="btn btn-outline-danger deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog"><i class="fa-solid fa-circle-minus"></i></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

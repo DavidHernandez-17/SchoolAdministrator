@@ -69,12 +69,6 @@ namespace SchoolAdministrator.Controllers
             return View(level);
         }
 
-        // GET: Institutions/Create
-        public IActionResult Create()
-        {
-            Institution institution = new() { Levels = new List<Level>() };
-            return View(institution);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,13 +102,10 @@ namespace SchoolAdministrator.Controllers
 
         }
 
-        public async Task<IActionResult> AddLevel(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
+        [NoDirectAccess]
+        public async Task<IActionResult> AddLevel(int id)
+        {
             Institution institution = await _context.Institutions.FindAsync(id);
             if (institution == null)
             {
@@ -145,68 +136,17 @@ namespace SchoolAdministrator.Controllers
                     };
                     _context.Add(level);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new { Id = model.Id });
+                    Institution institution = await _context.Institutions
+                        .Include(c => c.Levels)
+                        .FirstOrDefaultAsync(c => c.Id == model.InstitutionId);
+                    _flashMessage.Info("Registro creado");
+                    return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllLevels", institution) });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre, en esta Institución.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
-            }
-            return View(model);
-
-        }
-
-        // GET: Institutions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var institution = await _context.Institutions
-                .Include(i => i.Levels)
-                .FirstOrDefaultAsync(i => i.Id == id);
-            if (institution == null)
-            {
-                return NotFound();
-            }
-            return View(institution);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Institution institution)
-        {
-            if (id != institution.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(institution);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        _flashMessage.Info("Ya existe una institución con el mismo nombre.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre en esta Institución.");
                     }
                     else
                     {
@@ -219,10 +159,12 @@ namespace SchoolAdministrator.Controllers
                 }
             }
 
-            return View(institution);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddLevel", model) });
 
         }
 
+
+        [NoDirectAccess]
         public async Task<IActionResult> EditLevel(int? id)
         {
             if (id == null)
@@ -243,6 +185,7 @@ namespace SchoolAdministrator.Controllers
                 InstitutionId = level.Institution.Id,
                 Id = level.Id,
                 Name = level.Name,
+                Type = level.Type
             };
 
             return View(model);
@@ -262,34 +205,37 @@ namespace SchoolAdministrator.Controllers
             {
                 try
                 {
-                    Level level = new()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        Type = model.Type,
-                    };
+                    Level level = await _context.Levels.FindAsync(model.Id);
+                    level.Name = model.Name;
+                    level.Type = model.Type;
+
                     _context.Update(level);
+                    Institution institution = await _context.Institutions
+                        .Include(c => c.Levels)
+                        .FirstOrDefaultAsync( c => c.Id == model.InstitutionId);
+            
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new { Id = model.InstitutionId });
+                    return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllLevels", institution) });
                 }
+
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre, en esta Institución.");
+                        _flashMessage.Info("Ya existe un Nivel con el mismo nombre en esta Institución.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _flashMessage.Danger(dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    _flashMessage.Danger(exception.Message);
                 }
             }
 
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "EditLevel", model) });
 
         }
 
@@ -306,16 +252,28 @@ namespace SchoolAdministrator.Controllers
                 return NotFound();
             }
 
-            Level level = await _context.Levels
-                .Include(l => l.Institution)
-                .FirstOrDefaultAsync(l => l.Id == id);
+            var level = await _context.Levels
+                .Include(s => s.Institution)
+                .FirstOrDefaultAsync(s => s.Id == id);
             if (level == null)
             {
                 return NotFound();
             }
 
-            return View(level);
+            try
+            {
+                _context.Levels.Remove(level);
+                await _context.SaveChangesAsync();
+                _flashMessage.Info("Registro borrado.");
+            }
+            catch
+            {
+                _flashMessage.Danger("No se puede borrar el nivel porque tiene registros relacionados.");
+            }
+
+            return RedirectToAction(nameof(Details), new { Id = level.Institution.Id });
         }
+
 
 
         [HttpPost, ActionName("DeleteLevel")]

@@ -1,27 +1,26 @@
 ﻿@model SchoolAdministrator.Models.LevelViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nivel";
+    Layout = null;
 }
 
-<h3><i class="fa-solid fa-circle-plus btn-outline-primary"></i> Crear Nivel</h3>
-
-<hr />
 <flash dismissable="true" />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="AddLevel">
-            
+
+<div class="container smfont">
+    <form asp-action="AddLevel" autocomplete="off" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);">
+        <div class="box-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InstitutionId" />
-            <partial name="_Level"/>
-               
-            <div class="form-group mt-2">
-                <input type="submit" value="Crear" class="btn btn-outline-primary" />
-                <a asp-action="Details" asp-route-id="@Model.InstitutionId" class="btn btn-outline-success"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
-            </div>
-        </form>
-    </div>    
+
+            <partial name="_Level" />
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
