@@ -5,18 +5,14 @@
 }
 
 
-<h1>Detalles</h1>
+<h3><i class="fa-solid fa-circle-info text-primary"></i> Detalles Nivel</h3>
 
 <div>
-    <h4>Nivel</h4>
     <hr />
-    
     <partial name="_LevelDetails" />
 
 </div>
 <div>
-    <a asp-action="EditLevel" asp-route-id="@Model?.Id" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i> Editar Nivel</a>
     <a asp-action="Details" asp-route-id="@Model?.Institution.Id" class="btn btn-outline-success"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
 </div>
-
 
