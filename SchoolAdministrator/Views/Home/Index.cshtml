@@ -8,7 +8,7 @@
     <center><img src="~/images/welcomeTo.png" width="70%" height="100%" /></center>
 </div>
 
-<div class="text-center">
+<div class="text-center mb-5">
     @if (User.Identity.IsAuthenticated != true || User.IsInRole("User"))
     {
         <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Shop"><i class="fa-solid fa-store"></i> Tienda</a>
@@ -20,8 +20,4 @@
         <a class="btn btn-outline-dark" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-tachometer-alt text-danger"></i> Dashboard</a>
     }
 
-</div>
-<br />
-<div class="text-center">
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

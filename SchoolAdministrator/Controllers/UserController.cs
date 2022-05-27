@@ -47,6 +47,7 @@ namespace SchoolAdministrator.Controllers
                 Id = Guid.Empty.ToString(),
                 Institions = await _combosHelper.GetComboInstitutionsAsync(),
                 Levels = await _combosHelper.GetComboLevelsAsync(0),
+                Inscriptions = await _combosHelper.GetComboInscriptionsAsync(),
                 UserType = UserType.Admin,
             };
 
